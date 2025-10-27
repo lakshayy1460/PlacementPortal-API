@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.PlacementPortal.entity.Company;
+import com.example.PlacementPortal.input.CompanyInput;
 
 public interface CompanyService {
 
@@ -11,9 +12,9 @@ public interface CompanyService {
 
     public Optional<Company> getCompanyById(String id);
 
-    public Company AddCompany(Company company);
+    public Company AddCompany(CompanyInput companyInput);
 
-    public Company updateCompany(String id, Company company);
+    public Company updateCompany(String id, CompanyInput companyInput);
 
     public boolean deleteCompany(String id);
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.PlacementPortal.entity.JobProfile;
+import com.example.PlacementPortal.entity.JobStatus;
 import com.example.PlacementPortal.input.JobProfileInput;
 import com.example.PlacementPortal.repository.JobProfileRepository;
 import com.example.PlacementPortal.service.JobProfileService;
@@ -34,16 +35,16 @@ public class JobProfileServiceImpl implements JobProfileService {
     public JobProfile AddJobProfile(JobProfileInput jobProfileInput) {
         JobProfile job = modelMapper.map(jobProfileInput, JobProfile.class);
 
+        job.setStatus(JobStatus.ACTIVE);
         job.setCreatedAt(new Date());
         job.setUpdatedAt(new Date());
         job.setDeleted(false);
 
-        JobProfile newJob = jobProfileRepository.save(job);
-        return newJob;
+        JobProfile jobToAdd = jobProfileRepository.save(job);
+        return jobToAdd;
     }
 
     public JobProfile updateJobProfile(String id, JobProfileInput jobProfileInput) {
-
         Optional<JobProfile> jobFromDB = jobProfileRepository.findById(id);
 
         if (jobFromDB.isPresent()) {
@@ -82,10 +83,11 @@ public class JobProfileServiceImpl implements JobProfileService {
 
     public boolean deleteJobProfile(String id) {
         Optional<JobProfile> jobFromDB = jobProfileRepository.findById(id);
-        if (jobFromDB != null) {
+        if (jobFromDB.isPresent()) {
             JobProfile job = modelMapper.map(jobFromDB, JobProfile.class);
             job.setDeleted(true);
             job.setUpdatedAt(new Date());
+            jobProfileRepository.save(job);
             return true;
         }
         return false;
