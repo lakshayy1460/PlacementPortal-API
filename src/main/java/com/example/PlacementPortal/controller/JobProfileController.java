@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.PlacementPortal.entity.JobProfile;
@@ -25,8 +26,11 @@ public class JobProfileController {
     JobProfileService jobProfileService;
 
     @GetMapping("")
-    public List<JobProfile> getAllJobProfiles() {
-        return jobProfileService.getAllJobProfiles();
+    public List<JobProfile> getAllJobProfiles(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int limit,
+            @RequestParam(defaultValue = "") String sortBy,
+            @RequestParam(defaultValue = "1") int sortOrder) {
+        return jobProfileService.getAllJobProfiles(page, limit, sortBy, sortOrder);
     }
 
     @GetMapping("/{id}")

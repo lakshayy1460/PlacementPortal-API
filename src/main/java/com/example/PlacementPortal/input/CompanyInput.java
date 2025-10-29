@@ -1,7 +1,5 @@
 package com.example.PlacementPortal.input;
 
-import java.util.List;
-
 import lombok.Data;
 
 @Data

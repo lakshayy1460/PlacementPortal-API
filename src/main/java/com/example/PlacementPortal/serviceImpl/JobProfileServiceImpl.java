@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.PlacementPortal.entity.JobProfile;
@@ -23,8 +25,17 @@ public class JobProfileServiceImpl implements JobProfileService {
     @Autowired
     ModelMapper modelMapper;
 
-    public List<JobProfile> getAllJobProfiles() {
-        return jobProfileRepository.findAll();
+    public List<JobProfile> getAllJobProfiles(int page, int limit, String sortBy, int sortOrder) {
+        Sort sort = Sort.unsorted();
+        if (!sortBy.equals("")) {
+            Sort.Direction direction = sortOrder == 1 ? Sort.Direction.ASC
+                    : (sortOrder == -1 ? Sort.Direction.DESC : null);
+
+            sort = direction == null ? Sort.by(sortBy) : Sort.by(direction, sortBy);
+        }
+        PageRequest pageRequest = PageRequest.of(page - 1, limit, sort);
+
+        return jobProfileRepository.findAllJobs(pageRequest);
     }
 
     public Optional<JobProfile> getJobProfileById(String id) {

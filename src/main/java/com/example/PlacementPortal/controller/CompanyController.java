@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.PlacementPortal.entity.Company;
@@ -25,8 +26,11 @@ public class CompanyController {
     CompanyService companyService;
 
     @GetMapping("")
-    public List<Company> getAllCompanies() {
-        return companyService.getAllCompanies();
+    public List<Company> getAllCompanies(@RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int limit, // Filtering -> Sorting -> Pagination
+            @RequestParam(defaultValue = "") String sortBy,
+            @RequestParam(defaultValue = "1") int sortOrder) {
+        return companyService.getAllCompanies(page, limit, sortBy, sortOrder);
     }
 
     @GetMapping("/{id}")

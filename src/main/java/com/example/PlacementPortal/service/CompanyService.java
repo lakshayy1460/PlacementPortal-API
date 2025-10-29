@@ -8,7 +8,7 @@ import com.example.PlacementPortal.input.CompanyInput;
 
 public interface CompanyService {
 
-    public List<Company> getAllCompanies();
+    public List<Company> getAllCompanies(int page, int limit, String sortBy, int sortOrder);
 
     public Optional<Company> getCompanyById(String id);
 
@@ -19,3 +19,5 @@ public interface CompanyService {
     public boolean deleteCompany(String id);
 
 }
+
+// page, limit, sortBy, sortDirection

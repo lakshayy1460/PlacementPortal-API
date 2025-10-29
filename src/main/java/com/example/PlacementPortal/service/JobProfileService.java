@@ -8,7 +8,7 @@ import com.example.PlacementPortal.input.JobProfileInput;
 
 public interface JobProfileService {
 
-    public List<JobProfile> getAllJobProfiles();
+    public List<JobProfile> getAllJobProfiles(int page, int limit, String sortBy, int sortOrder);
 
     public Optional<JobProfile> getJobProfileById(String id);
 
